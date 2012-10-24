@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    chest (0.0.1.pre)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    minitest (4.1.0)
+    rake (0.9.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  chest!
+  minitest (~> 4.1.0)
+  rake
