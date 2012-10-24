@@ -9,5 +9,9 @@ module Chest
         end
       end
     end
+
+    def ==(model)
+      self.id == model.id
+    end
   end
 end

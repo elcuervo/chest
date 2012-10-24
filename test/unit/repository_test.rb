@@ -4,7 +4,7 @@ describe Chest::Repository do
   it "should only store whitelisted attributes" do
     User = Class.new do
       include Chest::Model
-      attr_accessor :name, :email, :address
+      attr_accessor :id, :name, :email, :address
     end
 
     UserRepository = Class.new do
@@ -18,11 +18,11 @@ describe Chest::Repository do
       address: "Nowhere"
     )
 
-    saved_attributes = UserRepository.save(user)
+    UserRepository.save(user)
 
-    assert_equal "John", saved_attributes.fetch(:name)
-    assert_equal "john@doe.org", saved_attributes.fetch(:email)
-    assert_raises(KeyError) { saved_attributes.fetch(:address) }
+    assert_equal "John", user.name
+    assert_equal "john@doe.org", user.email
+    assert user.id
   end
 
   it "should be able to inherit from another repository" do
