@@ -6,8 +6,16 @@ module Chest
       end
     end
 
+    def parent_attributes
+      if superclass.ancestors.include?(Chest::Repository)
+        superclass.attributes
+      else
+        []
+      end
+    end
+
     def attributes(*symbols)
-      @_attributes ||= []
+      @_attributes ||= parent_attributes
       @_attributes |= symbols
     end
 

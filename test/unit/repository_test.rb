@@ -19,8 +19,23 @@ describe Chest::Repository do
     )
 
     saved_attributes = UserRepository.save(user)
+
     assert_equal "John", saved_attributes.fetch(:name)
     assert_equal "john@doe.org", saved_attributes.fetch(:email)
     assert_raises(KeyError) { saved_attributes.fetch(:address) }
+  end
+
+  it "should be able to inherit from another repository" do
+    MemberRepository = Class.new do
+      include Chest::Repository
+      attributes :name
+    end
+
+    AdminRepository = Class.new(MemberRepository) do
+      attributes :admin
+    end
+
+    assert_equal [:name], MemberRepository.attributes
+    assert_equal [:name, :admin], AdminRepository.attributes
   end
 end
