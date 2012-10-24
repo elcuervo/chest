@@ -1,17 +1,28 @@
 # Chest
 
+How should Chest behave
+
+```ruby
 class User
-  attr_reader :id
-  attr_accessor :name, :email
+  include Chest::Model
+
+  attr_accessor :id, :name, :email
 end
 
 class UserRepository
   include Chest::Repository
+
+  collection User
+  attributes :name
 end
 
-user = User.create(
+user = User.new(
   name: "John",
   email: "john@doe.com"
 )
 
 UserRepository.save(user)
+
+user.id
+#=> 1
+```
