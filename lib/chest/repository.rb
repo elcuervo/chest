@@ -9,7 +9,7 @@ module Chest
     end
 
     def find(id)
-      data = data_store.find(collection_class.name, id)
+      data = data_store.find(collection_name, id)
       collection_class.new(data)
     end
     alias :[] :find
@@ -35,12 +35,24 @@ module Chest
       @_attributes |= symbols
     end
 
-    def collection(class_name)
-      @_collection ||= class_name
+    def collection(collection_class)
+      @_collection ||= collection_class
+    end
+
+    def to_collection_name(name)
+      name.gsub(/::/, '/').
+        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+        gsub(/([a-z\d])([A-Z])/,'\1_\2').
+        tr("-", "_").
+        downcase
     end
 
     def collection_class
       @_collection
+    end
+
+    def collection_name
+      @_collection_name ||= to_collection_name(collection_class.name)
     end
 
     def save(model)
@@ -50,7 +62,8 @@ module Chest
       attributes_to_save = @_attributes & model_attributes
       attributes_to_save.each { |key, value| attributes[key] = model.send(key) }
 
-      result_attributes = data_store.save(model.class.to_s, attributes)
+      model_collection_name = to_collection_name(model.class.name)
+      result_attributes = data_store.save(model_collection_name, attributes)
       result_attributes.each do |key, value|
         model.send("#{key}=", value) if model.respond_to?("#{key}=")
       end
