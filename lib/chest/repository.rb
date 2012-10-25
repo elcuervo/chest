@@ -29,7 +29,7 @@ module Chest
       data_store.delete(collection_name, id)
     end
 
-    def store(current_store = Chest::DataStore::Memory, options = {})
+    def store(current_store = Chest.configuration.data_store, options = {})
       @_store ||= current_store.new(options)
     end
 
