@@ -13,6 +13,14 @@ module Chest
         raise NoMethodError
       end
 
+      def reset
+        raise NoMethodError
+      end
+
+      def delete(collection, id)
+        raise NoMethodError
+      end
+
       def save(collection, attributes)
         raise NoMethodError
       end

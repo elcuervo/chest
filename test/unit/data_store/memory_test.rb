@@ -14,16 +14,18 @@ describe Chest::DataStore::Memory do
       collection MemoryStorableClass
       attributes :name
     end
+
+    MemoryStorableRepository.reset
+
+    @memory = MemoryStorableClass.new(name: "John")
+    MemoryStorableRepository.save(@memory)
   end
 
   it "should be able to find a model" do
-    memory = MemoryStorableClass.new(name: "John")
-    MemoryStorableRepository.save(memory)
+    found_model = MemoryStorableRepository.find(@memory.id)
+    found_with_alias = MemoryStorableRepository[@memory.id]
 
-    found_model = MemoryStorableRepository.find(memory.id)
-    found_with_alias = MemoryStorableRepository[memory.id]
-
-    assert_equal memory, found_model
+    assert_equal @memory, found_model
     assert_equal found_with_alias, found_model
   end
 
@@ -32,5 +34,13 @@ describe Chest::DataStore::Memory do
 
     assert_equal 1, models.size
     assert models.first.is_a?(MemoryStorableClass)
+  end
+
+  it "should delete a given model" do
+    models = MemoryStorableRepository.find_all
+
+    MemoryStorableRepository.delete(models.first.id)
+
+    assert_equal 0, MemoryStorableRepository.find_all.size
   end
 end

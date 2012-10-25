@@ -1,7 +1,12 @@
 require "chest/data_store"
+require "forwardable"
 
 module Chest
   module Repository
+    extend Forwardable
+
+    def_delegator :data_store, :reset
+
     class << self
       def included(mod)
         mod.extend self
@@ -18,6 +23,10 @@ module Chest
       (data_store.find_all(collection_name) || []).map do |item|
         collection_class.new(item)
       end
+    end
+
+    def delete(id)
+      data_store.delete(collection_name, id)
     end
 
     def store(current_store = Chest::DataStore::Memory, options = {})

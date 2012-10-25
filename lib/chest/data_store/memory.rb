@@ -13,6 +13,10 @@ module Chest
         @bucket[collection]
       end
 
+      def reset
+        @bucket = {}
+      end
+
       def save(collection, attributes)
         @bucket[collection] ||= []
         @bucket[collection] << attributes
