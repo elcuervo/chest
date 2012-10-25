@@ -9,6 +9,10 @@ module Chest
         raise NoMethodError
       end
 
+      def find_all
+        raise NoMethodError
+      end
+
       def save(collection, attributes)
         raise NoMethodError
       end

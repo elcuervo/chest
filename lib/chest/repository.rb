@@ -14,6 +14,12 @@ module Chest
     end
     alias :[] :find
 
+    def find_all
+      (data_store.find_all(collection_name) || []).map do |item|
+        collection_class.new(item)
+      end
+    end
+
     def store(current_store = Chest::DataStore::Memory, options = {})
       @_store ||= current_store.new(options)
     end
