@@ -19,6 +19,9 @@ describe Chest::DataStore::Memory do
     MemoryStorableRepository.save(memory)
 
     found_model = MemoryStorableRepository.find(memory.id)
+    found_with_alias = MemoryStorableRepository[memory.id]
+
     assert_equal memory, found_model
+    assert_equal found_with_alias, found_model
   end
 end

@@ -1,10 +1,7 @@
-require "forwardable"
 require "chest/data_store"
 
 module Chest
   module Repository
-    extend Forwardable
-
     class << self
       def included(mod)
         mod.extend self
@@ -15,6 +12,7 @@ module Chest
       data = data_store.find(collection_class.name, id)
       collection_class.new(data)
     end
+    alias :[] :find
 
     def store(current_store = Chest::DataStore::Memory, options = {})
       @_store ||= current_store.new(options)
