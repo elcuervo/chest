@@ -29,8 +29,8 @@ module Chest
       data_store.delete(collection_name, id)
     end
 
-    def store(current_store = Chest.configuration.data_store, options = {})
-      @_store ||= current_store.new(options)
+    def store(current_store = Chest.configuration.data_store)
+      @_store ||= current_store.new(Chest.configuration.store_options)
     end
 
     def data_store

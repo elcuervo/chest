@@ -1,5 +1,5 @@
 module Chest
   class Configuration
-    attr_accessor :data_store
+    attr_accessor :data_store, :store_options
   end
 end
