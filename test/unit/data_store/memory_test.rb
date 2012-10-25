@@ -1,5 +1,5 @@
 require_relative "../../test_helper"
-require_relative "../../shared_examples"
+require "chest/test/shared_examples"
 
 describe Chest::DataStore::Memory do
   before do
